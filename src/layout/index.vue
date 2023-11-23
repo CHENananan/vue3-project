@@ -3,10 +3,10 @@ import {onMounted} from 'vue'
 
 import {useCategoryStore} from '@/stores/category'
 
-import LayoutNav from './components/LayoutNav.vue'
-import LayoutSticky from './components/LayoutSticky.vue'
-import LayoutHeader from './components/LayoutHeader.vue'
-import LayoutFooter from './components/LayoutFooter.vue'
+import NavigationBar from './NavigationBar.vue'
+import StickyHeader from './StickyHeader.vue'
+import CommonHeader from './Header.vue'
+import CommonFooter from './Footer.vue'
 
 const categoryStore = useCategoryStore()
 
@@ -17,9 +17,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <LayoutSticky />
-  <LayoutNav />
-  <LayoutHeader />
+  <StickyHeader />
+  <NavigationBar />
+  <CommonHeader />
   <RouterView />
-  <LayoutFooter />
+  <CommonFooter />
 </template>

@@ -1,9 +1,11 @@
 <script setup>
-import Category from './components/Category.vue';
-import Banner from './components/Banner.vue';
-import New from './components/New.vue';
-import Product from './components/Product.vue';
-import Hot from './components/Hot.vue';
+import Category from './Category.vue';
+import Banner from './Banner.vue';
+import FreshThings from './FreshThings.vue';
+import Product from './Product.vue';
+import Recommend from './Recommend.vue';
+
+
 
 </script>
 
@@ -12,7 +14,7 @@ import Hot from './components/Hot.vue';
       <Category />
       <Banner />
     </div>
-    <New />
-    <Hot />
+    <FreshThings />
+    <Recommend />
     <Product />
 </template>
