@@ -1,6 +1,6 @@
 <script setup>
-import Panal from './components/Panal.vue';
-import ProductItem from './components/ProductItem.vue';
+import Panal from '@/views/components/Panal.vue';
+import ProductItem from '@/views/components/ProductItem.vue';
 import { getProducts } from '@/apis/home';
 import { onMounted,ref } from 'vue';
 
@@ -29,7 +29,7 @@ onMounted(() => {
         </RouterLink>
         <ul class="goods-list">
           <li v-for="good in cate.goods" :key="good.id"> 
-            <ProductItem :name="good.name"  :desc="good.desc" :price="good.price" :picture="good.picture" />
+            <ProductItem :name="good.name"  :desc="good.desc" :price="good.price" :picture="good.picture" :id="good.id"/>
           </li>
         </ul>
       </div>

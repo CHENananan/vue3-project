@@ -1,42 +1,10 @@
 <script setup>
-import { getCategories } from '@/apis/category';
-import ProductItem from '../Home/components/ProductItem.vue';
-import {getBanner} from '@/apis/home'
-import { ref, onMounted,watch } from 'vue';
-import {useRoute} from 'vue-router'
+import ProductItem from '@/views/components/ProductItem.vue';
+import { useBanner } from './composables/useBanner';
+import {useCategory} from './composables/useCategory'
 
-const categoryData = ref([]);
-
-const route = useRoute()
-
-const queryCategoryList = async (id) => {
-  const { data } = await getCategories(id);
-  categoryData.value = data.result;
-};
-
-onMounted(() => {
-  queryCategoryList(route.params.id);
-});
-
-watch(
-  ()=>route.params, 
-  () => {
-    queryCategoryList(route.params.id);
-});
-
-
-const bannerList = ref([])
-
-const queryBanner = async () => {
-  const res = await getBanner({
-    distributionSite:'2'
-  })
-  bannerList.value = res.data.result
-}
-
-onMounted(()=>{
-    queryBanner()
-})
+const {bannerList} = useBanner()
+const {categoryData} = useCategory()
 </script>
 
 <template>
@@ -63,7 +31,7 @@ onMounted(()=>{
         <h3>全部分类</h3>
         <ul>
           <li v-for="i in categoryData.children" :key="i.id">
-            <RouterLink to="/">
+            <RouterLink :to="`/category/sub/${i.id}`">
               <img :src="i.picture" />
               <p>{{ i.name }}</p>
             </RouterLink>
@@ -75,7 +43,7 @@ onMounted(()=>{
           <h3>- {{ item.name }}-</h3>
         </div>
         <div class="body">
-          <ProductItem v-for="good in item.goods" :key="good.id"  :desc="good.desc" :price="good.price" :picture="good.picture"/>
+          <ProductItem v-for="good in item.goods" :key="good.id"  :desc="good.desc" :price="good.price" :picture="good.picture" :id="good.id"/>
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 <script setup>
 import { getRecommendThings } from '@/apis/home';
-import Panal from './components/Panal.vue';
+import Panal from '@/views/components/Panal.vue';
 import { onMounted,ref } from 'vue';
 
 const list = ref([])

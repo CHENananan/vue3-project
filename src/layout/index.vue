@@ -20,6 +20,8 @@ onMounted(() => {
   <StickyHeader />
   <NavigationBar />
   <CommonHeader />
-  <RouterView />
+  <!-- 添加key，强制刷新 -->
+  <!-- <RouterView :key="$route.fullPath"/> -->
+  <RouterView/>
   <CommonFooter />
 </template>

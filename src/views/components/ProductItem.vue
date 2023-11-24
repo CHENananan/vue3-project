@@ -1,5 +1,8 @@
 <script setup>
 defineProps({
+    id: {
+        type: [Number, String],
+    },
     name: String,
     desc: String,
     price: {
@@ -12,7 +15,7 @@ defineProps({
 </script>
 
 <template>
-    <RouterLink to="/" class="goods-item">
+    <RouterLink :to="`/detail/${id}`" class="goods-item">
         <img v-lazy-img="picture" alt="" />
         <p class="name ellipsis">{{ name }}</p>
         <p class="desc ellipsis">{{ desc }}</p>
