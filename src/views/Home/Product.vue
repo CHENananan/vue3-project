@@ -1,19 +1,19 @@
 <script setup>
-import Panal from '@/views/components/Panal.vue';
-import ProductItem from '@/views/components/ProductItem.vue';
-import { getProducts } from '@/apis/home';
-import { onMounted,ref } from 'vue';
+import Panal from '@/views/components/Panal.vue'
+import ProductItem from '@/views/components/ProductItem.vue'
+import { getProducts } from '@/apis/home'
+import { onMounted, ref } from 'vue'
 
 const list = ref([])
 
 const queryProducts = async () => {
-  const { data } = await getProducts();
-  list.value = data.result;
-};
+  const data = await getProducts()
+  list.value = data.result
+}
 
 onMounted(() => {
-    queryProducts();
-});
+  queryProducts()
+})
 </script>
 
 <template>
@@ -28,8 +28,14 @@ onMounted(() => {
           </strong>
         </RouterLink>
         <ul class="goods-list">
-          <li v-for="good in cate.goods" :key="good.id"> 
-            <ProductItem :name="good.name"  :desc="good.desc" :price="good.price" :picture="good.picture" :id="good.id"/>
+          <li v-for="good in cate.goods" :key="good.id">
+            <ProductItem
+              :name="good.name"
+              :desc="good.desc"
+              :price="good.price"
+              :picture="good.picture"
+              :id="good.id"
+            />
           </li>
         </ul>
       </div>
@@ -37,7 +43,7 @@ onMounted(() => {
   </div>
 </template>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .home-product {
   background: #fff;
   margin-top: 20px;

@@ -1,15 +1,15 @@
 <script setup>
-import ProductItem from '@/views/components/ProductItem.vue';
-import { getFilterCategories,getSubCategories} from '@/apis/category'
-import {ref,onMounted} from 'vue'
-import {useRoute} from 'vue-router'
+import ProductItem from '@/views/components/ProductItem.vue'
+import { getFilterCategories, getSubCategories } from '@/apis/category'
+import { ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 
 const route = useRoute()
 
 const categoryData = ref([])
 
 const queryFilterCategoryData = async (id) => {
-  const {data} = await getFilterCategories(id)
+  const data = await getFilterCategories(id)
   categoryData.value = data.result
 }
 
@@ -20,65 +20,68 @@ onMounted(() => {
 const goodList = ref([])
 
 const params = ref({
-    categoryId: route.params.id,
-    page: 1,
-    pageSize: 20,
-    sortField: 'publishTime',
+  categoryId: route.params.id,
+  page: 1,
+  pageSize: 20,
+  sortField: 'publishTime',
 })
 
 const querySubCategoryData = async (params) => {
-  const {data} = await getSubCategories(params)
+  const data = await getSubCategories(params)
   goodList.value = data.result.items
   pageData.value = {
-    page:data.result.page,
-    pages:data.result.pages,
-    pageSize:data.result.pageSize
-    }
+    page: data.result.page,
+    pages: data.result.pages,
+    pageSize: data.result.pageSize,
+  }
 }
 
 onMounted(() => {
-    querySubCategoryData(params.value)
+  querySubCategoryData(params.value)
 })
 
 const handleToChangeTab = () => {
-    params.value.page = 1
-    querySubCategoryData(params.value)
+  params.value.page = 1
+  querySubCategoryData(params.value)
 }
 
 const disabledLoad = ref(false)
 
 const pageData = ref({})
 // 待优化
-const onLoadMore =async () => {
-    params.value.page++
+const onLoadMore = async () => {
+  params.value.page++
 
-    if(params.value.page > pageData.value.pages) {
-        disabledLoad.value = true
-        return
-    }
+  if (params.value.page > pageData.value.pages) {
+    disabledLoad.value = true
+    return
+  }
 
-    const {data} = await getSubCategories(params.value)
-        goodList.value = [...goodList.value, ...data.result.items]
-        pageData.value = {
-        page:data.result.page,
-        pages:data.result.pages,
-        pageSize:data.result.pageSize
-    }
+  const data = await getSubCategories(params.value)
+  goodList.value = [...goodList.value, ...data.result.items]
+  pageData.value = {
+    page: data.result.page,
+    pages: data.result.pages,
+    pageSize: data.result.pageSize,
+  }
 
-    // 停止加载
-    if (data.result.items.length === 0) {
-        disabledLoad.value === true
-    }
+  // 停止加载
+  if (data.result.items.length === 0) {
+    disabledLoad.value === true
+  }
 }
 </script>
 
 <template>
-  <div class="container ">
+  <div class="container">
     <!-- 面包屑 -->
     <div class="bread-container">
       <el-breadcrumb separator=">">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item :to="{ path: `/category/${categoryData.parentId}` }"> {{ categoryData.parentName }}
+        <el-breadcrumb-item
+          :to="{ path: `/category/${categoryData.parentId}` }"
+        >
+          {{ categoryData.parentName }}
         </el-breadcrumb-item>
         <el-breadcrumb-item>{{ categoryData.name }}</el-breadcrumb-item>
       </el-breadcrumb>
@@ -89,16 +92,25 @@ const onLoadMore =async () => {
         <el-tab-pane label="最高人气" name="orderNum"></el-tab-pane>
         <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>
       </el-tabs>
-      <div class="body" v-infinite-scroll="onLoadMore"  :infinite-scroll-disabled="disabledLoad">
-         <!-- 商品列表-->
-        <ProductItem v-for="item in goodList" :key="item.id" :name="item.name"  :desc="item.desc" :price="item.price" :picture="item.picture" :id="item.id"/>
+      <div
+        class="body"
+        v-infinite-scroll="onLoadMore"
+        :infinite-scroll-disabled="disabledLoad"
+      >
+        <!-- 商品列表-->
+        <ProductItem
+          v-for="item in goodList"
+          :key="item.id"
+          :name="item.name"
+          :desc="item.desc"
+          :price="item.price"
+          :picture="item.picture"
+          :id="item.id"
+        />
       </div>
     </div>
   </div>
-
 </template>
-
-
 
 <style lang="scss" scoped>
 .bread-container {
@@ -152,7 +164,5 @@ const onLoadMore =async () => {
     display: flex;
     justify-content: center;
   }
-
-
 }
 </style>

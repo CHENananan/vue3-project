@@ -1,22 +1,22 @@
 import { ref, onMounted } from 'vue'
 import { getBanner } from '@/apis/home'
 
-export const useBanner = ()=>{
-    const bannerList = ref([])
+export const useBanner = () => {
+  const bannerList = ref([])
 
-    const queryBanner = async () => {
-        const res = await getBanner({
-            distributionSite:'2'
-        })
-        bannerList.value = res.data.result
-    }
-
-    onMounted(()=>{
-        queryBanner()
+  const queryBanner = async () => {
+    const res = await getBanner({
+      distributionSite: '2',
     })
+    bannerList.value = res.result
+  }
 
-    return{
-        bannerList,
-        queryBanner
-    }
+  onMounted(() => {
+    queryBanner()
+  })
+
+  return {
+    bannerList,
+    queryBanner,
+  }
 }

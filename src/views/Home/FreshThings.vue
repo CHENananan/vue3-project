@@ -1,36 +1,35 @@
 <script setup>
-import { getFreshThings } from '@/apis/home';
-import Panal from '@/views/components/Panal.vue';
-import { onMounted,ref } from 'vue';
+import { getFreshThings } from '@/apis/home'
+import Panal from '@/views/components/Panal.vue'
+import { onMounted, ref } from 'vue'
 
 const list = ref([])
 
 const queryFreshThings = async () => {
-  const { data } = await getFreshThings();
-  list.value = data.result;
-};
+  const data = await getFreshThings()
+  list.value = data.result
+}
 
 onMounted(() => {
-  queryFreshThings();
-});
+  queryFreshThings()
+})
 </script>
 
 <template>
-    <Panal title="新鲜好物" sub-title="新鲜出炉 品质靠谱">
-        <ul class="goods-list">
-          <li v-for="item in list" :key="item.id">
-            <RouterLink :to="`/detail/${item.id}`">
-              <img :src="item.picture" alt="" />
-              <p class="name">{{ item.name }}</p>
-              <p class="price">&yen;{{ item.price }}</p>
-            </RouterLink>
-          </li>
-        </ul>
-    </Panal>
+  <Panal title="新鲜好物" sub-title="新鲜出炉 品质靠谱">
+    <ul class="goods-list">
+      <li v-for="item in list" :key="item.id">
+        <RouterLink :to="`/detail/${item.id}`">
+          <img :src="item.picture" alt="" />
+          <p class="name">{{ item.name }}</p>
+          <p class="price">&yen;{{ item.price }}</p>
+        </RouterLink>
+      </li>
+    </ul>
+  </Panal>
 </template>
 
-
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .goods-list {
   display: flex;
   justify-content: space-between;
@@ -41,7 +40,7 @@ onMounted(() => {
     height: 406px;
 
     background: #f0f9f4;
-    transition: all .5s;
+    transition: all 0.5s;
 
     &:hover {
       transform: translate3d(0, -3px, 0);
