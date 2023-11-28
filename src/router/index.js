@@ -9,33 +9,37 @@ const router = createRouter({
     {
       path: '/',
       component: Layout,
-      children:[
+      children: [
         {
-          path:'',
-          component: () => import('@/views/Home/index.vue')
+          path: '',
+          component: () => import('@/views/Home/index.vue'),
         },
         {
-          path:'/category/:id',
-          component: () => import('@/views/Category/index.vue')
+          path: '/category/:id',
+          component: () => import('@/views/Category/index.vue'),
         },
         {
-          path:'/category/sub/:id',
-          component: () => import('@/views/SubCategory/index.vue')
+          path: '/category/sub/:id',
+          component: () => import('@/views/Category/SubCategory/index.vue'),
         },
         {
-          path:'/detail/:id',
-          component: () => import('@/views/Detail/index.vue')
-        }
-      ]
+          path: '/detail/:id',
+          component: () => import('@/views/Category/Detail/index.vue'),
+        },
+        {
+          path: 'cart',
+          component: () => import('@/views/Cart/index.vue'),
+        },
+      ],
     },
     {
       path: '/login',
-      component: Login
-    }
+      component: Login,
+    },
   ],
-  scrollBehavior(to, from, savedPosition) {
+  scrollBehavior() {
     return { top: 0 }
-  }
+  },
 })
 
 export default router

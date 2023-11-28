@@ -1,6 +1,6 @@
 <script setup>
 import ProductItem from '@/views/components/ProductItem.vue'
-import { getFilterCategories, getSubCategories } from '@/apis/category'
+import { getSubCategoryInfo, getSubCategoryList } from '@/apis/category'
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 
@@ -8,13 +8,13 @@ const route = useRoute()
 
 const categoryData = ref([])
 
-const queryFilterCategoryData = async (id) => {
-  const data = await getFilterCategories(id)
+const querySubCategoryInfo = async (id) => {
+  const data = await getSubCategoryInfo({ id })
   categoryData.value = data.result
 }
 
 onMounted(() => {
-  queryFilterCategoryData(route.params.id)
+  querySubCategoryInfo(route.params.id)
 })
 
 const goodList = ref([])
@@ -26,8 +26,8 @@ const params = ref({
   sortField: 'publishTime',
 })
 
-const querySubCategoryData = async (params) => {
-  const data = await getSubCategories(params)
+const querySubCategoryList = async (params) => {
+  const data = await getSubCategoryList(params)
   goodList.value = data.result.items
   pageData.value = {
     page: data.result.page,
@@ -37,12 +37,12 @@ const querySubCategoryData = async (params) => {
 }
 
 onMounted(() => {
-  querySubCategoryData(params.value)
+  querySubCategoryList(params.value)
 })
 
 const handleToChangeTab = () => {
   params.value.page = 1
-  querySubCategoryData(params.value)
+  querySubCategoryList(params.value)
 }
 
 const disabledLoad = ref(false)
@@ -57,7 +57,7 @@ const onLoadMore = async () => {
     return
   }
 
-  const data = await getSubCategories(params.value)
+  const data = await getSubCategoryList(params.value)
   goodList.value = [...goodList.value, ...data.result.items]
   pageData.value = {
     page: data.result.page,

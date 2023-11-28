@@ -1,11 +1,11 @@
 import { ref, onMounted } from 'vue'
-import { getBanner } from '@/apis/home'
+import { getBannerList } from '@/apis/home'
 
 export const useBanner = () => {
   const bannerList = ref([])
 
   const queryBanner = async () => {
-    const res = await getBanner({
+    const res = await getBannerList({
       distributionSite: '2',
     })
     bannerList.value = res.result

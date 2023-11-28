@@ -1,9 +1,9 @@
 <script setup>
-import { storeToRefs } from "pinia";
-import { useCategoryStore } from '@/stores/category';
+import { storeToRefs } from 'pinia'
+import { useCategoryStore } from '@/stores/category'
 
-const categoryStore = useCategoryStore();
-const { categoryList } = storeToRefs(categoryStore);
+const categoryStore = useCategoryStore()
+const { categoryList } = storeToRefs(categoryStore)
 </script>
 
 <template>
@@ -11,13 +11,18 @@ const { categoryList } = storeToRefs(categoryStore);
     <ul class="menu">
       <li v-for="item in categoryList" :key="item.id">
         <RouterLink to="/">{{ item.name }}</RouterLink>
-        <RouterLink v-for="subItem in item.children.slice(0,2)" :key="subItem.id" to="/">{{ subItem.name }}</RouterLink>
+        <RouterLink
+          v-for="subItem in item.children.slice(0, 2)"
+          :key="subItem.id"
+          to="/"
+          >{{ subItem.name }}</RouterLink
+        >
         <!-- 弹层layer位置 -->
         <div class="layer">
           <h4>分类推荐 <small>根据您的购买或浏览记录推荐</small></h4>
           <ul>
             <li v-for="subItem in item.goods" :key="subItem.id">
-              <RouterLink to="/">
+              <RouterLink :to="`/detail/${subItem.id}`">
                 <img :src="subItem.picture" alt="" />
                 <div class="info">
                   <p class="name ellipsis-2">
@@ -35,8 +40,7 @@ const { categoryList } = storeToRefs(categoryStore);
   </div>
 </template>
 
-
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .home-category {
   width: 250px;
   height: 500px;

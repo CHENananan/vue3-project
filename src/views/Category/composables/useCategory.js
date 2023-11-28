@@ -1,5 +1,5 @@
 import { ref, onMounted } from 'vue'
-import { getCategories } from '@/apis/category'
+import { getCategoryList } from '@/apis/category'
 import { useRoute, onBeforeRouteUpdate } from 'vue-router'
 
 export const useCategory = () => {
@@ -7,7 +7,9 @@ export const useCategory = () => {
   const route = useRoute()
 
   const queryCategoryList = async (id) => {
-    const res = await getCategories(id)
+    const res = await getCategoryList({
+      id,
+    })
     categoryData.value = res.result
   }
 

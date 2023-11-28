@@ -1,23 +1,19 @@
-import request from "@/utils/http";
+import request from '@/utils/http'
 
-export const getCategories = (id) => {
-    return request.get("/category",{
-        params:{
-            id
-        }
-    });
+export const getCategoryList = (params) => {
+  return request.get('/category', {
+    params,
+  })
 }
 
-export const getFilterCategories = (id) => {
-    return request.get("/category/sub/filter",{
-        params:{
-            id
-        }
-    });
+export const getSubCategoryInfo = (params) => {
+  return request.get('/category/sub/filter', {
+    params,
+  })
 }
 
-export const getSubCategories = (params) => {
-    return request.post("/category/goods/temporary",{
-        ...params
-    });
+export const getSubCategoryList = (params) => {
+  return request.post('/category/goods/temporary', {
+    ...params,
+  })
 }

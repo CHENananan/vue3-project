@@ -1,15 +1,17 @@
 <script setup>
-import { getDetail } from '@/apis/goods'
+import { getGoodsInfo } from '@/apis/goods'
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import RecommendList from '@/views/components/RecommendList.vue'
+import { ElMessage } from 'element-plus'
+import { useCartStore } from '@/stores/cart'
 
 const route = useRoute()
 
 const goods = ref({})
 
 const queryGoods = async (id) => {
-  const data = await getDetail(id)
+  const data = await getGoodsInfo({ id })
   goods.value = data.result
 }
 
@@ -17,8 +19,37 @@ onMounted(() => {
   queryGoods(route.params.id)
 })
 
+let skuObj = {}
+
 const onSkuChange = (sku) => {
+  skuObj = sku
   console.log(sku)
+}
+
+const cartStore = useCartStore()
+
+const count = ref(1)
+const onCountChange = (val) => {
+  count.value = val
+}
+
+const handleToAddCart = () => {
+  if (skuObj.skuId) {
+    // 已选择
+    cartStore.insert({
+      id: goods.value.id,
+      name: goods.value.name,
+      picture: goods.value.mainPictures[0],
+      price: goods.value.price,
+      count: count.value,
+      skuId: skuObj.skuId,
+      attrsText: skuObj.specsText,
+      selected: true,
+    })
+  } else {
+    // 未选择
+    ElMessage.warning('请选择商品规格')
+  }
 }
 </script>
 
@@ -29,11 +60,11 @@ const onSkuChange = (sku) => {
         <el-breadcrumb separator=">">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
           <el-breadcrumb-item
-            :to="{ path: `/catagory/${goods.categories?.[1].id}` }"
+            :to="{ path: `/category/${goods.categories?.[1].id}` }"
             >{{ goods.categories?.[1].name }}
           </el-breadcrumb-item>
           <el-breadcrumb-item
-            :to="{ path: `/catagory/sub/${goods.categories?.[0].id}` }"
+            :to="{ path: `/category/sub/${goods.categories?.[0].id}` }"
             >{{ goods.categories?.[0].name }}
           </el-breadcrumb-item>
           <el-breadcrumb-item>{{ goods.name }}</el-breadcrumb-item>
@@ -96,10 +127,16 @@ const onSkuChange = (sku) => {
               <!-- sku组件 -->
               <com-sku :goods="goods" @change="onSkuChange" />
               <!-- 数据组件 -->
-
+              <el-input-number
+                v-model="count"
+                min="1"
+                @change="onCountChange"
+              />
               <!-- 按钮组件 -->
               <div>
-                <el-button size="large" class="btn"> 加入购物车 </el-button>
+                <el-button size="large" class="btn" @click="handleToAddCart">
+                  加入购物车
+                </el-button>
               </div>
             </div>
           </div>

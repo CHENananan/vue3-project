@@ -38,6 +38,7 @@ onMounted(() => {
   queryRecommendGoods({
     id: route.params.id,
     type: props.type,
+    limit: 3,
   })
 })
 </script>

@@ -1,8 +1,7 @@
 import request from '@/utils/http'
 
-export const doLogin = ({ account, password }) => {
+export const doLogin = (params) => {
   return request.post('/login', {
-    account,
-    password,
+    ...params,
   })
 }

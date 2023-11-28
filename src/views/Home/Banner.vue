@@ -1,11 +1,11 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { getBanner } from '@/apis/home'
+import { getBannerList } from '@/apis/home'
 
 const bannerList = ref([])
 
 const queryBanner = async () => {
-  const res = await getBanner()
+  const res = await getBannerList()
   bannerList.value = res.result
 }
 

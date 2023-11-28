@@ -1,18 +1,18 @@
 <script setup>
 import Panal from '@/views/components/Panal.vue'
 import ProductItem from '@/views/components/ProductItem.vue'
-import { getProducts } from '@/apis/home'
+import { getGoodsList } from '@/apis/home'
 import { onMounted, ref } from 'vue'
 
 const list = ref([])
 
-const queryProducts = async () => {
-  const data = await getProducts()
+const queryGoodsList = async () => {
+  const data = await getGoodsList()
   list.value = data.result
 }
 
 onMounted(() => {
-  queryProducts()
+  queryGoodsList()
 })
 </script>
 
