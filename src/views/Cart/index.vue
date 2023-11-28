@@ -1,4 +1,5 @@
 <script setup>
+import router from '@/router'
 import { useCartStore } from '@/stores/cart'
 import { storeToRefs } from 'pinia'
 
@@ -18,6 +19,10 @@ const handleToCheck = (selected, goods) => {
 
 const handleToCheckAll = (selected) => {
   cartStore.checkAll(selected)
+}
+
+const handleToCheckout = () => {
+  router.push('/checkout')
 }
 </script>
 
@@ -106,7 +111,9 @@ const handleToCheckAll = (selected) => {
           <span class="red">¥ {{ cartSelectedTotalPrice }} </span>
         </div>
         <div class="total">
-          <el-button size="large" type="primary">下单结算</el-button>
+          <el-button size="large" type="primary" @click="handleToCheckout"
+            >下单结算</el-button
+          >
         </div>
       </div>
     </div>
