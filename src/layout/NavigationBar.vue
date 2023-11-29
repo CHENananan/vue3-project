@@ -20,24 +20,17 @@ const handleToLogout = () => {
       <ul>
         <template v-if="userInfo.token">
           <li>
-            <a href="javascript:"
-              ><i class="iconfont icon-user"></i>{{ userInfo.account }}</a
-            >
+            <a href="javascript:"><i class="iconfont icon-user"></i>{{ userInfo.account }}</a>
           </li>
           <li>
-            <el-popconfirm
-              title="确认退出吗?"
-              confirm-button-text="确认"
-              cancel-button-text="取消"
-              @confirm="handleToLogout"
-            >
+            <el-popconfirm title="确认退出吗?" confirm-button-text="确认" cancel-button-text="取消" @confirm="handleToLogout">
               <template #reference>
                 <a href="javascript:;">退出登录</a>
               </template>
             </el-popconfirm>
           </li>
           <li><a href="javascript:;">我的订单</a></li>
-          <li><a href="javascript:;">会员中心</a></li>
+          <li><a href="javascript:;" @click="$router.push('/member')">会员中心</a></li>
         </template>
         <template v-else>
           <li>
@@ -54,11 +47,13 @@ const handleToLogout = () => {
 <style scoped lang="scss">
 .app-topnav {
   background: #333;
+
   ul {
     display: flex;
     height: 53px;
     justify-content: flex-end;
     align-items: center;
+
     li {
       a {
         padding: 0 15px;
@@ -76,7 +71,7 @@ const handleToLogout = () => {
         }
       }
 
-      ~ li {
+      ~li {
         a {
           border-left: 2px solid #666;
         }

@@ -1,5 +1,5 @@
 <script setup>
-import ProductItem from '@/views/components/ProductItem.vue'
+import GoodsItem from '@/views/components/GoodsItem.vue'
 import { getSubCategoryInfo, getSubCategoryList } from '@/apis/category'
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
@@ -78,9 +78,7 @@ const onLoadMore = async () => {
     <div class="bread-container">
       <el-breadcrumb separator=">">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item
-          :to="{ path: `/category/${categoryData.parentId}` }"
-        >
+        <el-breadcrumb-item :to="{ path: `/category/${categoryData.parentId}` }">
           {{ categoryData.parentName }}
         </el-breadcrumb-item>
         <el-breadcrumb-item>{{ categoryData.name }}</el-breadcrumb-item>
@@ -92,21 +90,10 @@ const onLoadMore = async () => {
         <el-tab-pane label="最高人气" name="orderNum"></el-tab-pane>
         <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>
       </el-tabs>
-      <div
-        class="body"
-        v-infinite-scroll="onLoadMore"
-        :infinite-scroll-disabled="disabledLoad"
-      >
+      <div class="body" v-infinite-scroll="onLoadMore" :infinite-scroll-disabled="disabledLoad">
         <!-- 商品列表-->
-        <ProductItem
-          v-for="item in goodList"
-          :key="item.id"
-          :name="item.name"
-          :desc="item.desc"
-          :price="item.price"
-          :picture="item.picture"
-          :id="item.id"
-        />
+        <GoodsItem v-for="item in goodList" :key="item.id" :name="item.name" :desc="item.desc" :price="item.price"
+          :picture="item.picture" :id="item.id" />
       </div>
     </div>
   </div>

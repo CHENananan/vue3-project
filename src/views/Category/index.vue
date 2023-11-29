@@ -1,10 +1,10 @@
 <script setup>
-import ProductItem from '@/views/components/ProductItem.vue';
+import GoodsItem from '@/views/components/GoodsItem.vue';
 import { useBanner } from './composables/useBanner';
-import {useCategory} from './composables/useCategory'
+import { useCategory } from './composables/useCategory'
 
-const {bannerList} = useBanner()
-const {categoryData} = useCategory()
+const { bannerList } = useBanner()
+const { categoryData } = useCategory()
 </script>
 
 <template>
@@ -43,7 +43,8 @@ const {categoryData} = useCategory()
           <h3>- {{ item.name }}-</h3>
         </div>
         <div class="body">
-          <ProductItem v-for="good in item.goods" :key="good.id"  :desc="good.desc" :price="good.price" :picture="good.picture" :id="good.id"/>
+          <GoodsItem v-for="good in item.goods" :key="good.id" :desc="good.desc" :price="good.price"
+            :picture="good.picture" :id="good.id" />
         </div>
       </div>
     </div>
